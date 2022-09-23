@@ -30,8 +30,13 @@ echo json_encode($usuarios);
 // echo $resultado;
 
 // TESTE DE LOGIN DE USUÁRIO
-$user = new Usuario();
-$user->login('josefina', 'kjwsgdjhsgdjs');
-$user->login('james', 'kjwsgdjhsgdjs');
+// $user = new Usuario();
+// $user->login('josefina', 'kjwsgdjhsgdjs');
+// $user->login('james', 'kjwsgdjhsgdjs');
+
+// TESTE DE INSERÇÃO DE USUÁRIO NO BANCO DE DADOS
+$aluno = new Usuario("Juliete Souza", "65276374");
+$aluno->insertUser();
+echo $aluno;
 
 ?>

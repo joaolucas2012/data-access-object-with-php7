@@ -37,6 +37,12 @@ class Usuario{
 
   // Métodos //
 
+  // Método construtor do Usuário
+  public function __construct($login, $password){
+    $this->setDesLogin($login);
+    $this->setDessenha($password);
+  }
+
   // Método para retornar usuário pelo Id //
   public function loadById($id){
     // Fazer a conexão com o Banco de dados
@@ -47,12 +53,16 @@ class Usuario{
     ));
     // Validando o resultado
     if(count($resultado) > 0){
-      $row = $resultado[0];
-      $this->setIdUsuario($row['idusuario']);
-      $this->setDesLogin($row['deslogin']);
-      $this->setDessenha($row['dessenha']);
-      $this->setDtCadastro(new DateTime($row['dtcadastro']));
+      $this->setData($resultado[0]);
     }
+  }
+
+  // Método para inserir dados a um usuário
+  public function setData($data){
+    $this->setIdUsuario($data['idusuario']);
+    $this->setDesLogin($data['deslogin']);
+    $this->setDessenha($data['dessenha']);
+    $this->setDtCadastro(new DateTime($data['dtcadastro']));
   }
 
   // Método para listar todos os usuários do banco de dados
@@ -70,6 +80,18 @@ class Usuario{
     )));
   }
 
+  // Método para inserir um novo usuário no banco de dados
+  public function insertUser(){
+    $sql = new Sql();
+    $resultado = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+      ":LOGIN"=>$this->getDesLogin(),
+      ":PASSWORD"=>$this->getDessenha()
+    ));
+    if(count($resultado) > 0){
+      $this->setData($resultado[0]);
+    }
+  }
+
   // Método para obter os dados do usuário autenticado
   public function login($login, $password){
     $sql = new Sql();
@@ -79,11 +101,7 @@ class Usuario{
     ));
     // Validando o resultado
     if(count($resultado) > 0){
-      $row = $resultado[0];
-      $this->setIdUsuario($row['idusuario']);
-      $this->setDesLogin($row['deslogin']);
-      $this->setDessenha($row['dessenha']);
-      $this->setDtCadastro(new DateTime($row['dtcadastro']));
+      $this->setData($resultado[0]);
       echo "$login conectado com sucesso!";
       // echo json_encode($resultado);
     }else{
