@@ -13,15 +13,16 @@ class Sql extends PDO {
     $this->conn = new PDO("mysql:host=localhost;dbname=dbphp7", "root", "");
   }
 
+  
   // Método que faz o bindParam
   private function bindParam($statement, $key, $value){
     $statement->bindParam($key, $value);
   }
-
+  
   // Método para receber os parâmetros e chamar o bindParam
-  private function setParams($statement, $parameters){
+  private function setParams($statement, $parameters = array()){
     foreach($parameters as $key => $value){
-      $this->setParam($key, $value);
+      $this->bindParam($statement, $key, $value);
     }
   }
 
