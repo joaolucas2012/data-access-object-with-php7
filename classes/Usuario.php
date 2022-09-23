@@ -75,6 +75,7 @@ class Usuario{
     // Validando o resultado
     if(count($resultado) > 0){
       $this->setData($resultado[0]);
+      return json_encode($resultado);
     }
   }
 
@@ -122,7 +123,26 @@ class Usuario{
     ));
   }
 
-  // Método para rertornar um json //
+  // Método para resetar todos os dados de um usuário
+  public function resetData(){
+    $this->setIdUsuario(0);
+    $this->setDesLogin("");
+    $this->setDessenha("");
+    $this->setDtCadastro(new DateTime());
+  }
+
+  // Método para deletar um usuário
+  public function deleteUser(){
+    $sql = new Sql();
+    // Deletando o usuário do banco de dados
+    $sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
+      ":ID"=>$this->getIdusuario()
+    ));
+    // Deletando o usuário da memória
+    $this->resetData();
+  }
+
+  // Método para retornar um json //
   public function __toString(){
     return json_encode(array(
       "idusuario"=>$this->getIdusuario(),

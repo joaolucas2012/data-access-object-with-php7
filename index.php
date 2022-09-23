@@ -40,8 +40,14 @@ echo json_encode($usuarios);
 // echo $aluno;
 
 // TESTE DE ATUALIZAÇÃO DE USUÁRIO
-$usuario = new Usuario();
-$usuario->loadById(7);
-$usuario->updateUser("Rafael", "passtrue");
-echo $usuario;
+// $usuario = new Usuario();
+// $usuario->loadById(7);
+// $usuario->updateUser("Rafael", "passtrue");
+// echo $usuario;
+
+// TESTE DE DELEÇÃO DE UM USUÁRIO
+  // $usuario = new Usuario();
+  // echo $usuario->loadById(5);
+  // $usuario->deleteUser();
+  // echo $usuario;
 ?>
